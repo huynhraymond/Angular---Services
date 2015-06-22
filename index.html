@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="base.css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="contacts/contacts.js"></script>
+    <script src="mails/mails.js"></script>
+    <script>
+        // myApp.contacts -> contacts.js
+        //var myApp = angular.module('myApp', ['ngRoute', 'myApp.contacts']);
+        var myApp = angular.module('myApp', ['ngRoute', 'myApp.contacts', 'myApp.mails']);
+
+        myApp.config(function ($routeProvider) {
+            $routeProvider.when('/contacts', {
+                templateUrl: 'contacts/_contact.html',
+                controller: 'ContactsController'
+
+            }).when('/contacts/:id', {
+                templateUrl: 'mails/_mail.html',
+                controller: 'MailController'
+
+            }).otherwise({
+                redirectTo: '/contacts'
+            });
+        });
+        /*
+        angular.module('myApp', []).controller('myController', function($scope, Contact) {
+            $scope.contact = {};
+
+            $scope.saveContact = function() {
+                Contact.save($scope.contact);
+                $scope.contact = {};
+            };
+
+            $scope.listAllContacts = function() {
+                $scope.contacts = Contact.list();
+            };
+
+        }).factory('Contact', function () {
+            // This is a factory function that will return a service (singleton object)
+            var contacts = []; // a private container to store the contacts array
+            function uuid() {
+                // a v4 compliant way of generating a uuid
+                // refer: http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                    return v.toString(16);
+                });
+            }
+            return  {
+                save: function (contact) {
+                    contact._id = uuid();
+                    contacts.push(contact);
+
+                    console.log(contacts);
+                }
+            };
+
+            return {
+                list: function() { return contacts; }
+            }
+        });     */
+    </script>
+</head>
+<body>
+    <!-- <a href="#/mails">Mails</a> -->
+    <div ng-view></div>
+</body>
+
+</html>
